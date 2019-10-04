@@ -16,6 +16,7 @@ class Keypad():
             ["7", "8", "9"],
             ["*", "0", "#"]
         ]
+        self.setup()
 
     def setup(self):
         '''Set up the input and output pins'''
@@ -35,13 +36,13 @@ class Keypad():
                 if GPIO.input(colp) == GPIO.HIGH:
                     row, col = rowp, colp
                     for _ in range(19):
-                        sleep(10)
+                        sleep(10/1000)
                         if GPIO.input(colp) != GPIO.HIGH:
                             correct_input = False
                             break
                     if correct_input:
                         while GPIO.input(colp) == GPIO.HIGH:
-                            sleep(2)
+                            sleep(2/1000)
                     else:
                         row, col = -1, -1
             GPIO.output(rowp, GPIO.LOW)
@@ -52,9 +53,21 @@ class Keypad():
         row, col = -1, -1
         while row == -1 and col == -1:
             row, col = self.do_polling()
+            sleep(10/1000)
         return self.get_symbol(row, col)
 
     def get_symbol(self, row, col):
         '''Input: row, col.
         Returns the corresponding symbol for the given input'''
-        return self.keypad[row][col]
+        row_index = self.rows.index(row)
+        col_index = self.cols.index(col)
+        return self.keypad[row_index][col_index]
+
+
+keypad = Keypad()
+while True:
+    GPIO.setwarnings(False)
+    try:
+        print(keypad.get_next_signal())
+    except KeyboardInterrupt:
+        GPIO.cleanup()
