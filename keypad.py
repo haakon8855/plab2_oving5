@@ -4,7 +4,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 
-class Keypad():
+class Keypad:
     '''Keypad class to handle input from keyboard'''
 
     def __init__(self):
