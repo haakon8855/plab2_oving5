@@ -4,8 +4,8 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 
-class Keyboard():
-    '''Keyboard class to handle input from keyboard'''
+class Keypad():
+    '''Keypad class to handle input from keyboard'''
 
     def __init__(self):
         self.rows = [18, 23, 24, 25]
