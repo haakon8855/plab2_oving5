@@ -4,7 +4,7 @@ from keypad import Keypad
 from ledBoard import Led_board
 
 
-class Agent():
+class Agent:
     '''Main class Agent for controlling the hele driten'''
 
     def __init__(self):
@@ -29,6 +29,7 @@ class Agent():
         return self.keypad.get_next_signal()
 
     def verify_login(self):
+        # A3
         '''Check that the entered password corresponds to the current password
         and save result to override. Then call lighing sequence'''
         if self.cump == self.get_password():
@@ -55,8 +56,51 @@ class Agent():
     def get_password(self):
         '''Returns the current password from the password-file'''
         with open(self.pass_path, 'r') as file:
-            password = file.readline()
+            password = file.readline().strip()
             return password
 
-    def set_password(self):
+    def set_password(self, password):
         '''a'''
+        with open(self.pass_path, 'w') as file:
+            file.write(password)
+
+    def a2(self, digit):
+        """adds a digit to cump"""
+        self.cump += digit
+
+    def a4(self):
+        """Resets the FSM"""
+        self.cump = ""
+        self.cump_old = ""
+        self.led = [0, 0]  # [led_num, led_dur]
+        self.override = ""
+
+    def a5(self):
+        self.override = ""
+
+    def a6(self):
+        """Refreshes the FSM
+            (ready to start from active)"""
+        self.cump = ""
+        self.cump_old = ""
+        self.led = [0, 0]  # [led_num, led_dur]
+        self.override = ""
+
+    def a7(self):
+        self.cump_old = self.cump
+        self.cump = ""
+
+    def a8(self):
+        """Check that cump == cump_old"""
+        if self.cump == self.cump_old:
+            self.override = "Y"
+            # TODO: self.led_board.correct_password()
+
+    def a11(self):
+        self.set_password(self.cump)
+        self.cump = ""
+        self.cump_old = ""
+        self.override = ""
+
+    def nothing(self):
+        pass
