@@ -1,15 +1,15 @@
 '''Plab 2 Gruppe 20'''
 
-# from keypad import Keypad
-# from ledBoard import Led_board
+from keypad import Keypad
+from led_board import LedBoard
 
 
 class Agent:
     '''Main class Agent for controlling the hele driten'''
 
     def __init__(self):
-        # self.keypad = Keypad()
-        # self.led_board = Led_board()
+        self.keypad = Keypad()
+        self.led_board = LedBoard()
         self.cump = ""
         self.cump_old = ""
         self.pass_path = "password.txt"
@@ -20,25 +20,23 @@ class Agent:
     def init_passcode_entry(self):
         '''Clear the password buffer (cump), and run startup light sequence'''
         self.cump = ""
-        # TODO: self.led_board.startup()
-        print("startup")
+        self.led_board.power_up()
 
     def get_next_signal(self):
         '''Return the override-signal if it is non-blank;
         otherwise query the keypad for the next pressed key.'''
         if self.override != "":
             return self.override
-        # self.digit = self.keypad.get_next_signal()
+        self.keypad.get_next_signal()
         self.digit = input("> ")
         return self.digit
 
     def verify_login(self):
-        # A3
         '''Check that the entered password corresponds to the current password
         and save result to override. Then call lighing sequence'''
         if self.cump == self.get_password():
             self.override = "Y"
-            # TODO: self.led_board.correct_password()
+            self.led_board.correct_password()
             print("correct password")
         else:
             self.override = "N"
@@ -71,22 +69,23 @@ class Agent:
         with open(self.pass_path, 'w') as file:
             file.write(password)
 
-    def a2(self):
+    def a02(self):
         """adds a digit to cump"""
         self.cump += self.digit
 
-    def a4(self):
+    def a04(self):
         """Resets the FSM"""
         self.cump = ""
         self.cump_old = ""
         self.led = [0, 0]  # [led_num, led_dur]
         self.override = ""
 
-    def a5(self):
+    def a05(self):
+        '''Reset override and cump'''
         self.override = ""
         self.cump = ""
 
-    def a6(self):
+    def a06(self):
         """Refreshes the FSM
             (ready to start from active)"""
         self.cump = ""
@@ -94,30 +93,34 @@ class Agent:
         self.led = [0, 0]  # [led_num, led_dur]
         self.override = ""
 
-    def a7(self):
+    def a07(self):
+        '''Cache cump in cump_old, reset cump'''
         self.cump_old = self.cump
         self.cump = ""
 
-    def a8(self):
+    def a08(self):
         """Check that cump == cump_old"""
         if self.cump == self.cump_old:
             self.override = "Y"
-            # TODO: self.led_board.correct_password()
+            self.led_board.correct_password()
         else:
             self.override = "N"
 
     def a10(self):
+        '''Light up led nr x for k seconds'''
         self.led[1] = int(self.cump)
-        # Make led ligth up for self.led_duration seconds
+        self.led_board.light_led(self.led[0], self.led[1])
 
     def a11(self):
+        '''Reset cump, cump_old and override and set the new password'''
         self.set_password(self.cump)
         self.cump = ""
         self.cump_old = ""
         self.override = ""
 
     def a12(self):
+        '''Choose led'''
         self.led[0] = int(self.digit)
 
     def nothing(self):
-        pass
+        '''Does absolutely nothing'''
