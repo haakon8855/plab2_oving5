@@ -18,7 +18,7 @@ class Rule:
         self.action = action
 
     def check_rule(self, current_state, current_signal):
+        '''Checks if a rule is to be fired'''
         # current_signal - the signal that comes from the FSM
         # current_signal - the current state that the FSM is in
-        if current_state == self.state1 and current_signal in self.signal:
-            return True
+        return current_state == self.state1 and current_signal in self.signal

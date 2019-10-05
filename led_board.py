@@ -1,4 +1,5 @@
 """Module containing methods used for the LED-board"""
+
 from time import sleep, time
 import RPi.GPIO as GPIO
 
@@ -88,14 +89,3 @@ class LedBoard:
         self.set_pin(0, -1)
         self.set_pin(1, -1)
         self.set_pin(2, -1)
-
-
-"""
-def setup(self):
-    '''Method for setting the proper mode'''
-    GPIO.setmode(GPIO.BCM)
-    for pin in self.pins:
-        GPIO.setup(pin, GPIO.OUT)  # Setting the voltage level of an output p
-    """  """  def off_led(self, led_number):
-        '''Turn of one of the 6 LEDs'''
-        GPIO.output(led_number, GPIO.LOW)"""
