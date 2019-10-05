@@ -23,14 +23,14 @@ class FSM:
         self.add_rule("read", "init", FSM.all, agent.a04)
         # From verify
         self.add_rule("verify", "active", "Y", agent.a05)
-        self.add_rule("verify", "init", FSM.all, agent.a04)
+        self.add_rule("verify", "init", FSM.all, agent.wrong_password)
         # Logout process
         self.add_rule("active", "logout", "#", agent.nothing)
-        self.add_rule("logout", "init", "#", agent.a04)
+        self.add_rule("logout", "init", "#", agent.power_down)
         self.add_rule("logout", "active", FSM.all, agent.nothing)
         # LED process
         self.add_rule("active", "led", "012345", agent.a12)
-        self.add_rule("led", "time", "0123456789", agent.nothing)
+        self.add_rule("led", "time", "*", agent.nothing)
         self.add_rule("led", "active", FSM.all, agent.a06)
         self.add_rule("time", "time", "0123456789", agent.a02)
         self.add_rule("time", "active", "*", agent.a10)
@@ -55,7 +55,7 @@ class FSM:
         self.add_rule("pc", "verify2", "*", agent.a08)
         self.add_rule("pc", "active", "#", agent.a06)
         self.add_rule("verify2", "active", "Y", agent.a11)
-        self.add_rule("verify2", "active", FSM.all, agent.a06)
+        self.add_rule("verify2", "active", FSM.all, agent.wrong_password)
 
     def add_rule(self, state1, state2, signal, action):
         '''Adds a new rule to the end of self.rule_list'''

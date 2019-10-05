@@ -47,42 +47,32 @@ class LedBoard:
         t_end = time() + k
         while time() < t_end:
             for j in range(0, 3):
-                self.light_led(j, 0.3)
+                self.light_led(j, 0.15)
             for j in range(3, 6):
-                self.light_led(k, 0.3)
+                self.light_led(j, 0.15)
         # self.reset()
 
     def power_up(self):
         """Lighting patterns associated with powering up the system."""
-        t_end = time() + 3
+        t_end = time() + 1.5
         while time() < t_end:
             self.light_led(4, 0.003)
             self.light_led(5, 0.003)
 
     def power_down(self):
         """Lighting patterns associated with powering down the system."""
-        t_end = time() + 3
+        t_end = time() + 1.5
         while time() < t_end:
             self.light_led(0, 0.003)
             self.light_led(1, 0.003)
 
     def wrong_password(self):
         """Lighting patterns associated with wrong password entry"""
-        t_end = time() + 0.4
-        while time() < t_end:
-            self.light_led(4, 0.003)
-            self.light_led(5, 0.003)
-        t_end = time() + 1.5
-        while time() < t_end:
-            self.light_led(2, 0.003)
-            self.light_led(3, 0.003)
+        self.flash_all_leds(1.5)
 
     def correct_password(self):
         """Lighting patterns associated with correct password entry"""
-        t_end = time() + 1
-        while time() < t_end:
-            self.light_led(4, 0.003)
-            self.light_led(5, 0.003)
+        self.twinkle_all_leds(1.5)
 
     def reset(self):
         """Method for resetting all the LEDs"""

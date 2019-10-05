@@ -27,8 +27,7 @@ class Agent:
         otherwise query the keypad for the next pressed key.'''
         if self.override != "":
             return self.override
-        self.keypad.get_next_signal()
-        self.digit = input("> ")
+        self.digit = self.keypad.get_next_signal()
         return self.digit
 
     def verify_login(self):
@@ -98,6 +97,7 @@ class Agent:
         '''Light up led nr x for k seconds'''
         self.led[1] = int(self.cump)
         self.led_board.light_led(self.led[0], self.led[1])
+        self.a06()
 
     def a11(self):
         '''Reset cump, cump_old and override and set the new password'''
@@ -109,6 +109,16 @@ class Agent:
     def a12(self):
         '''Choose led'''
         self.led[0] = int(self.digit)
+
+    def wrong_password(self):
+        '''Flashes wrong password sequence'''
+        self.led_board.wrong_password()
+        self.a04()
+
+    def power_down(self):
+        '''Powers down with led sequence'''
+        self.led_board.power_down()
+        self.a04()
 
     def nothing(self):
         '''Does absolutely nothing'''
