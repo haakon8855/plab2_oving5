@@ -106,11 +106,18 @@ class Agent:
         else:
             self.override = "N"
 
+    def a10(self):
+        self.led[1] = int(self.cump)
+        # Make led ligth up for self.led_duration seconds
+
     def a11(self):
         self.set_password(self.cump)
         self.cump = ""
         self.cump_old = ""
         self.override = ""
+
+    def a12(self):
+        self.led[0] = int(self.digit)
 
     def nothing(self):
         pass
