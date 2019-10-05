@@ -1,6 +1,6 @@
+"""Module containing methods used for the LED-board"""
+from time import sleep, time
 import RPi.GPIO as GPIO
-from time import *
-from random import randint
 
 
 class LedBoard:
@@ -16,10 +16,10 @@ class LedBoard:
             [1, -1, 0],  # E
             [0, -1, 1]  # F
         ]
-        self.GPIO = GPIO
-        self.GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BCM)
 
     def set_pin(self, pin_index, pin_state):
+        """Method for setting the pins"""
         if pin_state == -1:
             GPIO.setup(self.pins[pin_index], GPIO.IN)
         else:
@@ -47,7 +47,7 @@ class LedBoard:
         while time() < t_end:
             for j in range(0, 3):
                 self.light_led(j, 0.3)
-            for k in range(3, 6):
+            for j in range(3, 6):
                 self.light_led(k, 0.3)
         # self.reset()
 
@@ -76,23 +76,19 @@ class LedBoard:
             self.light_led(2, 0.003)
             self.light_led(3, 0.003)
 
+    def correct_password(self):
+        """Lighting patterns associated with correct password entry"""
+        t_end = time() + 1
+        while time() < t_end:
+            self.light_led(4, 0.003)
+            self.light_led(5, 0.003)
+
     def reset(self):
+        """Method for resetting all the LEDs"""
         self.set_pin(0, -1)
         self.set_pin(1, -1)
         self.set_pin(2, -1)
 
-
-# if __name__ == "__main__":
-#     GPIO.setwarnings(False)
-#     leds = LedBoard()
-#     leds.power_up()
-#     sleep(3)
-#     leds.power_down()
-#     sleep(3)
-#     leds.wrong_password()
-
-
-'''Holds the settings for each GPIO for each LED'''
 
 """
 def setup(self):
