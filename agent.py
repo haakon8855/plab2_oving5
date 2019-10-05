@@ -46,18 +46,6 @@ class Agent:
         '''Light up the LED self.led[0] for self.led[1] seconds'''
         print("Lighting LED", self.led[0], "for", self.led[1], "seconds")
 
-    def flash_leds(self):
-        '''Flash all LEDs'''
-        print("Flash all leds")
-
-    def twinkle_leds(self):
-        '''Twinkle all LEDs'''
-        print("Twinkle all leds")
-
-    def exit_action(self):
-        '''Initiate power down light sequence'''
-        print("exit")
-
     def get_password(self):
         '''Returns the current password from the password file'''
         with open(self.pass_path, 'r') as file:

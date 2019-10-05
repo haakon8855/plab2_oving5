@@ -62,12 +62,3 @@ class Keypad:
         row_index = self.rows.index(row)
         col_index = self.cols.index(col)
         return self.keypad[row_index][col_index]
-
-
-keypad = Keypad()
-while True:
-    GPIO.setwarnings(False)
-    try:
-        print(keypad.get_next_signal())
-    except KeyboardInterrupt:
-        GPIO.cleanup()

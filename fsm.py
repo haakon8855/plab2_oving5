@@ -83,11 +83,11 @@ class FSM:
         rule.action()
 
 
-a = Agent()
-fsm = FSM(a)
+AGENT = Agent()
+FSM = FSM(AGENT)
 
-while fsm.run:
-    print(fsm.current_state)
-    print(a.cump)
-    fsm.get_next_signal()
-    fsm.run_rules()
+while FSM.run:
+    print(FSM.current_state)
+    print(AGENT.cump)
+    FSM.get_next_signal()
+    FSM.run_rules()
