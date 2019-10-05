@@ -1,8 +1,11 @@
+'''Plab 2 Gruppe 20'''
+
 from Oving_5.rule import Rule
 from Oving_5.agent import Agent
 
 
 class FSM:
+    '''FSM-class to implement the finite state machine'''
     all = "#*0123456789N"
 
     def __init__(self, agent):
@@ -55,26 +58,27 @@ class FSM:
         self.add_rule("verify2", "active", FSM.all, agent.a6)
 
     def add_rule(self, state1, state2, signal, action):
-        # Adds a new rule to the end of self.rule_list
+        '''Adds a new rule to the end of self.rule_list'''
         rule = Rule(state1, state2, signal, action)
         self.rule_list.append(rule)
 
     def get_next_signal(self):
-        # Gets the next signal from the agent
+        '''Gets the next signal from the agent'''
         self.current_signal = self.agent.get_next_signal()
 
     def run_rules(self):
+        '''Checks all the rules and fires the correct one'''
         for elem in self.rule_list:
             if self.apply_rule(elem):
                 self.fire_rule(elem)
                 break
 
     def apply_rule(self, rule):
-        # Checks if the rule is satisfied
+        '''Checks if the rule is satisfied'''
         return rule.check_rule(self.current_state, self.current_signal)
 
     def fire_rule(self, rule):
-        # Changes the current_state, and excecutes the correct action.
+        '''Changes the current_state, and excecutes the correct action.'''
         self.current_state = rule.state2
         rule.action()
 
